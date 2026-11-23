@@ -1,140 +1,131 @@
-# Persian Text Preprocessing
+# Technical Documentation | مستندات فنی
 
-A desktop application for **Persian (Farsi) text cleaning, normalization, and tokenization**, built with Python, [Hazm](https://github.com/roshan-research/hazm), and [PySide6](https://doc.qt.io/qtforpython-6/).
+**Repository:** [nazanin1377/Persian-NLP-Toolkit](https://github.com/nazanin1377/Persian-NLP-Toolkit)
 
-این پروژه یک برنامه دسکتاپ برای پیش‌پردازش متن فارسی است. کاربران متن را در رابط گرافیکی راست‌به‌چپ وارد می‌کنند و خروجی مراحل پاک‌سازی، نرمال‌سازی، جداسازی واژه‌ها و جداسازی جملات را در تب‌های مستقل مشاهده می‌کنند.
+This directory contains supporting technical documentation for the Persian text preprocessing desktop application. For a project overview and installation instructions, see the [main README](../README.md).
 
-> **Project status:** Educational/prototype application. Check the outputs before using them for production NLP or machine-learning datasets.
+**Quick links:** [مستندات فارسی](#مستندات-فارسی) · [English documentation](#english-documentation)
 
-## Features | قابلیت‌ها
+---
 
-- **Cleaning:** Decodes HTML entities, strips simple HTML tags and HTTP(S)/www links, removes selected control/invisible characters, and normalizes whitespace while preserving Persian half-spaces (ZWNJ).
-- **Normalization:** Converts Arabic letter variants (`ي`, `ى`, `ك`, `ة`) and uses Hazm normalization to improve Persian writing consistency and spacing.
-- **Word tokenization:** Splits normalized text into tokens using Hazm's `word_tokenize`.
-- **Sentence tokenization:** Splits normalized text into sentences using Hazm's `sent_tokenize`.
-- **Desktop UI:** Persian right-to-left editor, separate output tabs, copy/paste, and clear buttons.
+## مستندات فارسی
 
-## Screenshot | تصویر برنامه
+### درباره پروژه
 
-After running the application, save a screenshot to `docs/screenshot.png` and uncomment the next line:
+این پروژه یک برنامه دسکتاپ برای **پیش‌پردازش متن فارسی** با Python، کتابخانه Hazm و رابط گرافیکی PySide6 است. هدف آن نمایش و مقایسه خروجی مراحل پاک‌سازی، نرمال‌سازی، جداسازی واژه‌ها و جداسازی جمله‌هاست. این برنامه مدل یادگیری ماشین نیست و غلط‌یاب املایی یا تحلیل‌گر احساسات محسوب نمی‌شود.
 
-<!-- ![Application screenshot](docs/screenshot.png) -->
-
-## Requirements | پیش‌نیازها
-
-- Python 3.13 (developed in a Python 3.13.3 environment)
-- Windows 10/11 is the primary tested workflow; PySide6 may also work on other supported platforms
-- Python packages listed in `requirements.txt`
-
-## Installation | نصب
-
-Open PowerShell in the project directory:
-
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install -r requirements.txt
-```
-
-If activation is restricted by PowerShell policy, run the environment's Python directly:
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-```
-
-## Usage | اجرا
-
-```powershell
-python gui.py
-```
-
-Or directly:
-
-```powershell
-.\.venv\Scripts\python.exe gui.py
-```
-
-1. Paste/type Persian text into the upper input field.
-2. Click **پردازش متن**.
-3. Review the **Cleaning**, **Normalization**, **Words**, and **Sentences** tabs.
-4. Copy a selected output using **کپی خروجی**; use **پاک کردن** to reset.
-
-### Example | مثال
-
-**Input**
+### روند پردازش
 
 ```text
-سلام   دوستان، من كتاب هاي زيادي دارم.
-من مي خواهم برنامه نويسي ياد بگيرم.
-https://example.com
+متن خام فارسی
+    ↓
+پاک‌سازی (Cleaning)
+    ↓
+نرمال‌سازی (Normalization)
+    ├──→ جداسازی واژه‌ها (Word Tokenization)
+    └──→ جداسازی جمله‌ها (Sentence Tokenization)
 ```
 
-**Cleaning (illustrative)**
+| مرحله | کاری که انجام می‌دهد |
+| --- | --- |
+| پاک‌سازی | حذف لینک‌ها و تگ‌های ساده HTML، اصلاح فاصله‌های اضافی و حذف بعضی نویسه‌های کنترلی؛ حفظ علائم نگارشی و نیم‌فاصله |
+| نرمال‌سازی | یکسان‌سازی برخی حروف عربی و فارسی و اصلاح برخی الگوهای فاصله‌گذاری با Hazm |
+| جداسازی واژه‌ها | تقسیم متن نرمال‌شده به توکن‌های واژه و علائم با Hazm |
+| جداسازی جمله‌ها | تفکیک متن به جمله‌ها با Hazm |
+
+### نمونه کوتاه
+
+**ورودی:**
 
 ```text
-سلام دوستان، من كتاب هاي زيادي دارم.
-من مي خواهم برنامه نويسي ياد بگيرم.
+سلام   دوستان! من كتاب هاي زيادي دارم.
 ```
 
-**Normalization (illustrative; Hazm version-dependent)**
+**پس از پاک‌سازی:**
 
 ```text
-سلام دوستان، من کتاب‌های زیادی دارم.
-من می‌خواهم برنامه نویسی یاد بگیرم.
+سلام دوستان! من كتاب هاي زيادي دارم.
 ```
 
-Token boundaries and spacing may differ by Hazm version and input; this application does **not** guarantee spelling correction.
+**پس از نرمال‌سازی (نمونه تقریبی):**
 
-## Processing pipeline | مراحل پردازش
+```text
+سلام دوستان! من کتاب‌های زیادی دارم.
+```
+
+نتیجه دقیق ممکن است بر اساس نسخه Hazm و متن ورودی تفاوت داشته باشد. این ابزار حذف کلمات توقف، ریشه‌یابی و تصحیح املایی را در رابط گرافیکی فعلی انجام نمی‌دهد.
+
+### فایل‌های مرتبط
+
+- [راهنمای فنی پردازش و سناریوهای آزمون](PROCESSING.md)
+- [راهنمای اصلی نصب و اجرا](../README.md)
+- [کد رابط گرافیکی](../gui.py)
+- [تصویر اجرای برنامه](preview.png)
+
+### محدودیت‌ها
+
+پاک‌سازی HTML با عبارت منظم انجام می‌شود و جایگزین یک HTML Parser کامل نیست. لینک‌ها حذف می‌شوند و ممکن است برخی نشانه‌های چسبیده به لینک نیز حذف شوند. عملکرد قواعد نرمال‌سازی به نسخه Hazm وابسته است. برای استفاده در مجموعه‌داده‌های حساس یا پروژه‌های عملیاتی، خروجی‌ها باید ارزیابی شوند.
+
+---
+
+## English Documentation
+
+### Overview
+
+**Persian-NLP-Toolkit** is a Python desktop application for Persian text preprocessing. It uses **Hazm** for normalization and tokenization and **PySide6** for a right-to-left graphical interface. It is a preprocessing tool, **not** a trained AI model, spell checker, or sentiment classifier.
+
+### Processing pipeline
 
 ```text
 Raw Persian text
-   |
-   v
-Cleaning (HTML/URLs/whitespace/control characters)
-   |
-   v
-Normalization (Persian letters and Hazm)
-   |                   |
-   v                   v
-Word tokenization    Sentence tokenization
+       ↓
+Cleaning
+       ↓
+Normalization
+       ├──→ Word tokenization
+       └──→ Sentence tokenization
 ```
 
-Detailed explanations, caveats, and test examples: [docs/PROCESSING.md](docs/PROCESSING.md).
+| Stage | Behavior |
+| --- | --- |
+| Cleaning | Decodes HTML entities, removes simple HTML tags and URLs, handles selected control/format characters, and reduces extra whitespace while preserving ZWNJ |
+| Normalization | Standardizes selected Arabic/Persian letter variants and applies Hazm normalization |
+| Word tokenization | Uses `hazm.word_tokenize()` on normalized text |
+| Sentence tokenization | Uses `hazm.sent_tokenize()` on normalized text |
 
-## Repository structure | ساختار مخزن
+### Example
+
+**Input:**
 
 ```text
-Persian-Text-Preprocessing/
-├── gui.py                 # PySide6 desktop application (your existing file)
-├── main.py                # Optional CLI demonstration (your existing file)
-├── requirements.txt       # Dependencies
-├── .gitignore             # Files excluded from version control
-├── README.md              # Project overview and quick start
-└── docs/
-    ├── PROCESSING.md     # Processing methods, limitations and test cases
-    └── screenshot.png     # Optional application screenshot
+سلام   دوستان! من كتاب هاي زيادي دارم.
 ```
 
-**Important:** `gui.py` and `main.py` are not included in the documentation pack. Keep your locally working versions in the project folder.
+**Cleaned:**
 
-## Known limitations | محدودیت‌ها
+```text
+سلام دوستان! من كتاب هاي زيادي دارم.
+```
 
-- Cleaning uses regular expressions, not a complete HTML parser; complex or malformed HTML might not be processed correctly.
-- Automatic normalization is not the same as spell-checking or semantic correction; it may leave some compound expressions separated.
-- Stopword removal, stemming, lemmatization, model inference, and document import are **not** implemented in the current GUI.
-- Display and punctuation placement can vary for mixed Persian/English and bidirectional content.
-- Tokenization results depend on Hazm's implementation and version.
-- No external network calls are performed by the application code for processing text; installation can require internet access.
+**Normalized (illustrative):**
 
-## NLP use cases | کاربردها
+```text
+سلام دوستان! من کتاب‌های زیادی دارم.
+```
 
-Educational preprocessing, exploring tokenization, preparing text for frequency analysis, and inspecting normalization prior to downstream NLP. For Transformer models such as ParsBERT, use the model's own tokenizer for model inputs.
+Output may vary with the Hazm version and input. The current GUI does not perform stopword removal, lemmatization, or automatic spelling correction.
 
-## Development | توسعه
+### Documentation and source files
 
-Contributions and issues are welcome once the repository has been published. Potential improvements: automated tests, configurable cleaning, TXT/CSV import, copy/export JSON, and a clearer distinction between display and model-ready text.
+- [Detailed processing specification and manual tests](PROCESSING.md)
+- [Main README and installation instructions](../README.md)
+- [GUI implementation](../gui.py)
+- [Application screenshot](preview.png)
 
-## License | مجوز
+### Known limitations
 
-No license is included in this starter documentation pack. Before inviting others to reuse or modify the repository, choose and add a suitable `LICENSE` file.
+HTML cleaning uses regular expressions rather than a complete HTML parser. URL removal may also consume adjoining punctuation. Normalization is rule-based and should be evaluated for the intended NLP dataset. RTL display behavior can vary for mixed Persian/Latin text.
+
+---
+
+For issues, suggestions, or contributions, visit the repository's [Issues page](https://github.com/nazanin1377/Persian-NLP-Toolkit/issues).
